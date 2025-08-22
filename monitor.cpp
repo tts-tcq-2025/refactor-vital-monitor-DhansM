@@ -73,12 +73,9 @@ int vitalsOk(float temperature, float pulseRate, float spo2) {
         {"Pulse Rate", pulseRate, 60.0, 100.0},
         {"Oxygen Saturation", spo2, 90.0, 100.0}
     };
-
     bool anyOutOfRange = std::any_of(
         vitals.begin(),
         vitals.end(),
-        [](const Vital& v) { return !checkVital(v); } 
-    );
-
+        [](const Vital& v) { return !checkVital(v); } );
     return anyOutOfRange ? 0 : 1;
 }
