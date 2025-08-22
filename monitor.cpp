@@ -5,6 +5,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm> 
+
 using std::cout, std::flush, std::this_thread::sleep_for, std::chrono::seconds;
 
 /*int vitalsOk(float temperature, float pulseRate, float spo2) {
@@ -45,9 +47,9 @@ void showAlert(const std::string& message) {
     cout << message << "\n";
     for (int i = 0; i < 6; ++i) {
         cout << "\r* " << flush;
-        this_thread::sleep_for(seconds(1));
+        std::this_thread::sleep_for(std::chrono::seconds(1));
         cout << "\r *" << flush;
-        this_thread::sleep_for(seconds(1));
+        std::this_thread::sleep_for(std::chrono::seconds(1));
     }
 }
 
@@ -75,9 +77,11 @@ int vitalsOk(float temperature, float pulseRate, float spo2) {
     };
 
     
-return std::any_of(vitals.begin(), vitals.end(),
-         {
-            return !checkVital(vital);
-        }) ? 0 : 1;
+bool anyOutOfRange = std::any_of(vitals.begin(), vitals.end(),
+                                  {
+                                     return !checkVital(vital);
+                                 });
+return anyOutOfRange ? 0 : 1;
+
 
 }
