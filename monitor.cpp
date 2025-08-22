@@ -63,11 +63,11 @@ bool isSpo2Ok(float spo2) {
 
 
 int vitalsOk(float temperature, float pulseRate, float spo2) {
-    bool tempOk = checkVital("Temperature", temperature, 95.0, 102.0);
-    bool pulseOk = checkVital("Pulse Rate", pulseRate, 60.0, 100.0);
-    bool spo2Ok = checkVital("Oxygen Saturation", spo2, 90.0, 100.0);
-
-    return (tempOk && pulseOk && spo2Ok) ? 1 : 0;
+    if (!checkVital("Temperature", temperature, 95.0, 102.0)) return 0;
+    if (!checkVital("Pulse Rate", pulseRate, 60.0, 100.0)) return 0;
+    if (!checkVital("Oxygen Saturation", spo2, 90.0, 100.0)) return 0;
+    return 1;
 }
+
 
 
