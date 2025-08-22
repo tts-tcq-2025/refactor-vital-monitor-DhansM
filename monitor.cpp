@@ -42,14 +42,13 @@ using std::cout, std::flush, std::this_thread::sleep_for, std::chrono::seconds;
 }*/
 
 
-
 void showAlert(const std::string& message) {
     cout << message << "\n";
     for (int i = 0; i < 6; ++i) {
         cout << "\r* " << flush;
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        sleep_for(seconds(1));
         cout << "\r *" << flush;
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        sleep_for(seconds(1));
     }
 }
 
@@ -68,7 +67,6 @@ bool checkVital(const Vital& vital) {
     return true;
 }
 
-
 int vitalsOk(float temperature, float pulseRate, float spo2) {
     std::vector<Vital> vitals = {
         {"Temperature", temperature, 95.0, 102.0},
@@ -76,12 +74,11 @@ int vitalsOk(float temperature, float pulseRate, float spo2) {
         {"Oxygen Saturation", spo2, 90.0, 100.0}
     };
 
-    
-bool anyOutOfRange = std::any_of(vitals.begin(), vitals.end(),
-                                  {
-                                     return !checkVital(vital);
-                                 });
-return anyOutOfRange ? 0 : 1;
+    bool anyOutOfRange = std::any_of(
+        vitals.begin(),
+        vitals.end(),
+        [](const Vital& v) { return !checkVital(v); } 
+    );
 
-
+    return anyOutOfRange ? 0 : 1;
 }
