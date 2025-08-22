@@ -66,6 +66,7 @@ bool checkVital(const Vital& vital) {
     return true;
 }
 
+
 int vitalsOk(float temperature, float pulseRate, float spo2) {
     std::vector<Vital> vitals = {
         {"Temperature", temperature, 95.0, 102.0},
@@ -73,13 +74,14 @@ int vitalsOk(float temperature, float pulseRate, float spo2) {
         {"Oxygen Saturation", spo2, 90.0, 100.0}
     };
 
-    for (const auto& vital : vitals) {
-        if (!checkVital(vital)) {
-            return 0;
-        }
-    }
-    return 1;
+    bool anyOutOfRange = std::any_of(vitals.begin(), vitals.end(),
+         {
+            return !checkVital(vital);
+        });
 }
+
+    
+
 
 
 
