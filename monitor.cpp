@@ -61,19 +61,13 @@ bool isSpo2Ok(float spo2) {
     return spo2 >= 90;
 }
 
+
 int vitalsOk(float temperature, float pulseRate, float spo2) {
-    if (!isTemperatureOk(temperature)) {
-        showAlert("Temperature is critical!");
-        return 0;
-    }
-    if (!isPulseRateOk(pulseRate)) {
-        showAlert("Pulse Rate is out of range!");
-        return 0;
-    }
-    if (!isSpo2Ok(spo2)) {
-        showAlert("Oxygen Saturation out of range!");
-        return 0;
-    }
-    return 1;
+    bool tempOk = checkVital("Temperature", temperature, 95.0, 102.0);
+    bool pulseOk = checkVital("Pulse Rate", pulseRate, 60.0, 100.0);
+    bool spo2Ok = checkVital("Oxygen Saturation", spo2, 90.0, 100.0);
+
+    return (tempOk && pulseOk && spo2Ok) ? 1 : 0;
 }
+
 
